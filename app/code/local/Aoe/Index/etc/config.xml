@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Aoe_Index>
+			<version>0.0.1</version>
+		</Aoe_Index>
+	</modules>
+
+	<global>
+		<models>
+			<aoe_asyncindex>
+				<class>Aoe_Index_Model</class>
+			</aoe_asyncindex>
+
+			<index>
+				<rewrite>
+					<process>Aoe_Index_Model_Process</process>
+				</rewrite>
+			</index>
+		</models>
+	</global>
+
+</config>
