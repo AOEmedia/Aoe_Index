@@ -1,4 +1,4 @@
 app/etc/modules/*						app/etc/modules/
 app/code/local/Aoe/Index			app/code/local/Aoe/Index
 app/design/adminhtml/default/default/layout/*	app/design/adminhtml/default/default/layout/
-app/design/adminhtml/default/default/template/aoe_index/		app/design/adminhtml/default/default/template/aoe_index/
+app/design/adminhtml/default/default/template/*		app/design/adminhtml/default/default/template/
