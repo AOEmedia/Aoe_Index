@@ -8,9 +8,9 @@
 
 	<global>
 		<models>
-			<aoe_asyncindex>
+			<aoe_index>
 				<class>Aoe_Index_Model</class>
-			</aoe_asyncindex>
+			</aoe_index>
 
 			<index>
 				<rewrite>
@@ -18,6 +18,13 @@
 				</rewrite>
 			</index>
 		</models>
+		<blocks>
+			<index>
+				<rewrite>
+					<adminhtml_process_grid>Aoe_Index_Block_Adminhtml_Index_Process_Grid</adminhtml_process_grid>
+				</rewrite>
+			</index>
+		</blocks>
 	</global>
 
 </config>
