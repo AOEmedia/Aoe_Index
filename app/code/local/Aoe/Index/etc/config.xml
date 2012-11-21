@@ -10,21 +10,40 @@
 		<models>
 			<aoe_index>
 				<class>Aoe_Index_Model</class>
+				<resourceModel>aoe_index_resource</resourceModel>
 			</aoe_index>
+
+			<aoe_index_resource>
+				<class>Aoe_Index_Model_Resource</class>
+			</aoe_index_resource>
 
 			<index>
 				<rewrite>
 					<process>Aoe_Index_Model_Process</process>
 				</rewrite>
 			</index>
+
 		</models>
 		<blocks>
+			<aoe_index>
+				<class>Aoe_Index_Block</class>
+			</aoe_index>
 			<index>
 				<rewrite>
 					<adminhtml_process_grid>Aoe_Index_Block_Adminhtml_Index_Process_Grid</adminhtml_process_grid>
+					<adminhtml_process>Aoe_Index_Block_Adminhtml_Index_Process</adminhtml_process>
 				</rewrite>
 			</index>
 		</blocks>
 	</global>
+	<adminhtml>
+	<layout>
+		<updates>
+			<index>
+				<file>Aoe_Index/aoe_index.xml</file>
+			</index>
+		</updates>
+	</layout>
+	</adminhtml>
 
 </config>
