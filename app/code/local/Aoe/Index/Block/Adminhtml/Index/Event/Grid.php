@@ -35,8 +35,8 @@ class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Wi
 	{
 		/* @var $collection Aoe_Index_Model_Resource_Event_Collection */
 		$collection = Mage::getResourceModel('aoe_index/event_collection');
-		$collection->joinProcessEventTable();
-		$collection->joinProcessTable();
+//		$collection->joinProcessEventTable();
+//		$collection->joinProcessTable();
 
 		$this->setCollection($collection);
 		return parent::_prepareCollection();
