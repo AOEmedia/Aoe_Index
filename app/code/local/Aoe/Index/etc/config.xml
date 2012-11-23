@@ -41,7 +41,7 @@
 			<adminhtml>
 				<args>
 					<modules>
-						<Aoe_Index before="Mage_Index">Aoe_Index_Adminhtml</Aoe_Index>
+						<!--<Aoe_Index before="Mage_Index">Aoe_Index_Adminhtml</Aoe_Index>-->
 					</modules>
 				</args>
 			</adminhtml>
