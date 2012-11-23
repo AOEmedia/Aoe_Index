@@ -73,8 +73,15 @@ class Aoe_Index_Block_Adminhtml_Grid_Column_Renderer_Datetime
 		if($measure->compare(new Zend_Measure_Time(0))==0) {
 			return $measure->convertTo(Zend_Measure_Time::SECOND, 0);
 		}
-		$units = $measure->getConversionList();
-		array_multisort($units);
+		$units = array(
+			'SECOND'            => array('1', 's'),
+			'MINUTE'            => array('60', 'min'),
+			'HOUR'              => array('3600', 'h'),
+			'DAY'               => array('86400', 'day'),
+			'WEEK'              => array('604800', 'week'),
+			'MONTH'             => array('2628600', 'month'),
+			'YEAR'              => array('31536000', 'year'),
+		);
 		foreach ($units as $unitId => $unit) {
 			if (is_array($unit)
 				&& (($unit[0]/abs($measure->getValue(-1))) > 1)

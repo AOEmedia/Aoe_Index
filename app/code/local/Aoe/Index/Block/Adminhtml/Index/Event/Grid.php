@@ -1,8 +1,7 @@
 <?php
 
-class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Widget_Grid
-	//Mage_Index_Block_Adminhtml_Process_Grid
-{
+class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Widget_Grid {
+
 	/**
 	 * Process model
 	 *
@@ -25,17 +24,19 @@ class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Wi
 		parent::__construct();
 		$this->_eventModel = Mage::getSingleton('index/event');
 		$this->setId('indexer_events_grid');
-		$this->_filterVisibility = false;
-		$this->_pagerVisibility  = false;
+		$this->_filterVisibility = true;
+		$this->_pagerVisibility  = true;
 	}
 
 	/**
 	 * Prepare grid collection
 	 */
 	protected function _prepareCollection()
-	{  /* @var $collection Aoe_Index_Model_Resource_Event_Collection */
+	{
+		/* @var $collection Aoe_Index_Model_Resource_Event_Collection */
 		$collection = Mage::getResourceModel('aoe_index/event_collection');
-		//$collection->joinProcessEventTable();
+		$collection->joinProcessEventTable();
+		$collection->joinProcessTable();
 
 		$this->setCollection($collection);
 		return parent::_prepareCollection();
@@ -49,7 +50,7 @@ class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Wi
 		$baseUrl = $this->getUrl();
 		$this->addColumn('event_id', array(
 			'header'    => Mage::helper('index')->__('Event Id'),
-			'width'     => '180',
+			'width'     => '50',
 			'align'     => 'left',
 			'index'     => 'event_id',
 			//'sortable'  => false,
@@ -85,57 +86,26 @@ class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Wi
 			'index'     => 'created_at',
 		));
 
+		$this->addColumn('process_indexer_code', array(
+			'header'    => Mage::helper('index')->__('Indexer code'),
+			'type'      => 'text',
+			'width'     => '180',
+			'align'     => 'left',
+			'index'     => 'process_indexer_code',
+		));
+
+
+		$this->addColumn('process_event_status', array(
+			'header'    => Mage::helper('index')->__('Status'),
+			'type'      => 'text',
+			'width'     => '180',
+			'align'     => 'left',
+			'index'     => 'process_event_status',
+		));
+
+
 
 		return parent::_prepareColumns();
-	}
-
-	/**
-	 * Decorate status column values
-	 *
-	 * @param string $value
-	 * @param Mage_Index_Model_Process $row
-	 * @param Mage_Adminhtml_Block_Widget_Grid_Column $column
-	 * @param bool $isExport
-	 * @return string
-	 */
-	public function decorateStatus($value, $row, $column, $isExport)
-	{
-		$class = '';
-		switch ($row->getStatus()) {
-			case Mage_Index_Model_Process::STATUS_PENDING :
-				$class = 'grid-severity-notice';
-				break;
-			case Mage_Index_Model_Process::STATUS_RUNNING :
-				$class = 'grid-severity-major';
-				break;
-			case Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX :
-				$class = 'grid-severity-critical';
-				break;
-		}
-		return '<span class="'.$class.'"><span>'.$value.'</span></span>';
-	}
-
-	/**
-	 * Decorate "Update Required" column values
-	 *
-	 * @param string $value
-	 * @param Mage_Index_Model_Process $row
-	 * @param Mage_Adminhtml_Block_Widget_Grid_Column $column
-	 * @param bool $isExport
-	 * @return string
-	 */
-	public function decorateUpdateRequired($value, $row, $column, $isExport)
-	{
-		$class = '';
-		switch ($row->getUpdateRequired()) {
-			case 0:
-				$class = 'grid-severity-notice';
-				break;
-			case 1:
-				$class = 'grid-severity-critical';
-				break;
-		}
-		return '<span class="'.$class.'"><span>'.$value.'</span></span>';
 	}
 
 	/**
@@ -158,39 +128,6 @@ class Aoe_Index_Block_Adminhtml_Index_Event_Grid extends Mage_Adminhtml_Block_Wi
 	 */
 	public function getRowUrl($row)
 	{
-		return $this->getUrl('*/*/edit', array('process'=>$row->getId()));
-	}
-
-	/**
-	 * Add mass-actions to grid
-	 */
-	protected function _prepareMassaction()
-	{
-		$this->setMassactionIdField('process_id');
-		$this->getMassactionBlock()->setFormFieldName('process');
-
-		$modeOptions = Mage::getModel('index/process')->getModesOptions();
-
-		$this->getMassactionBlock()->addItem('change_mode', array(
-			'label'         => Mage::helper('index')->__('Change Index Mode'),
-			'url'           => $this->getUrl('*/*/massChangeMode'),
-			'additional'    => array(
-				'mode'      => array(
-					'name'      => 'index_mode',
-					'type'      => 'select',
-					'class'     => 'required-entry',
-					'label'     => Mage::helper('index')->__('Index mode'),
-					'values'    => $modeOptions
-				)
-			)
-		));
-
-		$this->getMassactionBlock()->addItem('reindex', array(
-			'label'    => Mage::helper('index')->__('Reindex Data'),
-			'url'      => $this->getUrl('*/*/massReindex'),
-			'selected' => true,
-		));
-
-		return $this;
+		return '';
 	}
 }

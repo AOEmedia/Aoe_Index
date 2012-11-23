@@ -31,19 +31,30 @@
 			<index>
 				<rewrite>
 					<adminhtml_process_grid>Aoe_Index_Block_Adminhtml_Index_Process_Grid</adminhtml_process_grid>
-					<adminhtml_process>Aoe_Index_Block_Adminhtml_Index_Process</adminhtml_process>
+					<!--<adminhtml_process>Aoe_Index_Block_Adminhtml_Index_Process</adminhtml_process>-->
 				</rewrite>
 			</index>
 		</blocks>
 	</global>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Aoe_Index before="Mage_Index">Aoe_Index_Adminhtml</Aoe_Index>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
 	<adminhtml>
-	<layout>
-		<updates>
-			<index>
-				<file>Aoe_Index/aoe_index.xml</file>
-			</index>
-		</updates>
-	</layout>
+		<layout>
+			<updates>
+				<aoe_index>
+					<file>Aoe_Index/aoe_index.xml</file>
+				</aoe_index>
+			</updates>
+		</layout>
 	</adminhtml>
 
 </config>

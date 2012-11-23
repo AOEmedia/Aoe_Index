@@ -3,6 +3,7 @@
 
 class Aoe_Index_Block_Adminhtml_Index_Process_Grid extends Mage_Index_Block_Adminhtml_Process_Grid
 {
+
     /**
      * Add name and description to collection elements
      */

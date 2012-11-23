@@ -1,12 +1,12 @@
 <?php
 
-class Aoe_Index_Block_Adminhtml_Index_Process extends Mage_Index_Block_Adminhtml_Process
+class Aoe_Index_Block_Adminhtml_Index_Event extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
     public function __construct()
     {
-        $this->_blockGroup = 'index';
+        $this->_blockGroup = 'aoe_index';
         $this->_controller = 'adminhtml_process';
-        $this->_headerText = Mage::helper('index')->__('Index Management');
+        $this->_headerText = Mage::helper('index')->__('Indexer Event Queue');
         parent::__construct();
 		$this->setTemplate('aoe_index/grid/container.phtml');
 		$this->_removeButton('add');
@@ -14,13 +14,16 @@ class Aoe_Index_Block_Adminhtml_Index_Process extends Mage_Index_Block_Adminhtml
 
 	protected function _prepareLayout()
 	{
-//		$this->setChild( 'grid',
-//			$this->getLayout()->createBlock( $this->_blockGroup.'/' . $this->_controller . '_grid',
-//				$this->_controller . '.grid')->setSaveParametersInSession(true) );
-
 		$eventGrid = $this->getLayout()->createBlock('aoe_index/adminhtml_index_event_grid');
 		$this->setChild('eventGrid', $eventGrid);
-		return parent::_prepareLayout();
+
+		foreach ($this->_buttons as $level => $buttons) {
+			foreach ($buttons as $id => $data) {
+				$childId = $this->_prepareButtonBlockId($id);
+				$this->_addButtonChildBlock($childId);
+			}
+		}
+		return $this;
 	}
 
 	public function getCreateUrl()
