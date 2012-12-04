@@ -74,4 +74,19 @@ class Aoe_Index_Model_Process extends Mage_Index_Model_Process {
 			Mage::dispatchEvent('after_reindex_process_' . $this->getIndexerCode());
 		}
 	}
+
+	/**
+	 * Process event with locks checking - this function is overridden to prevent Magento from indexing event while saving product
+	 *
+	 * @param Mage_Index_Model_Event $event
+	 * @return Mage_Index_Model_Process
+	 */
+	public function safeProcessEvent(Mage_Index_Model_Event $event)
+	{
+		if ($this->getMode() == self::MODE_QUEUED) {
+			return $this;
+		} else {
+			return parent::processEvent($event);
+		}
+	}
 }
