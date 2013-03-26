@@ -90,7 +90,7 @@ class Aoe_Index_Block_Adminhtml_Grid_Column_Renderer_Datetime
 			}
 			$convertTo = $unitId;
 		}
-		return $measure->convertTo($convertTo, 0);
+		return abs($measure->convertTo($convertTo, 0));
 
 	}
 }
