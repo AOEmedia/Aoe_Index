@@ -42,8 +42,35 @@ class Aoe_Index_Block_Adminhtml_Index_Process_Grid extends Mage_Index_Block_Admi
 		));
 		$this->_columnsOrder['started_at'] = 'update_required';
 
-
 		parent::_prepareColumns();
+
+        if (Mage::getConfig()->getModuleConfig('Aoe_Scheduler')->is('active', 'true'))
+        {
+            $this->removeColumn('action');
+            $this->addColumn('action',
+                array(
+                    'header'    =>  Mage::helper('index')->__('Action'),
+                    'width'     => '100',
+                    'type'      => 'action',
+                    'getter'    => 'getId',
+                    'actions'   => array(
+                        array(
+                            'caption'   => Mage::helper('index')->__('Reindex Data'),
+                            'url'       => array('base'=> '*/*/reindexProcess'),
+                            'field'     => 'process'
+                        ),
+                        array(
+                            'caption'   => Mage::helper('index')->__('Queue Reindex'),
+                            'url'       => array('base'=> '*/*/queueProcess'),
+                            'field'     => 'process'
+                        ),
+                    ),
+                    'filter'    => false,
+                    'sortable'  => false,
+                    'is_system' => true,
+            ));
+        }
+
 		$this->getColumn('ended_at')->setData('ageBase','started_at' );
 		$this->getColumn('ended_at')->setData('ageDescription','(Took %s)' );
 		$this->getColumn('ended_at')->setData('renderer','Aoe_Index_Block_Adminhtml_Grid_Column_Renderer_Datetime' );
@@ -51,4 +78,19 @@ class Aoe_Index_Block_Adminhtml_Index_Process_Grid extends Mage_Index_Block_Admi
 	}
 
 
+    protected function _prepareMassaction()
+    {
+        parent::_prepareMassaction();
+
+        if (Mage::getConfig()->getModuleConfig('Aoe_Scheduler')->is('active', 'true'))
+        {
+            $this->getMassactionBlock()->addItem('queue', array(
+                'label'    => Mage::helper('index')->__('Queue Reindex'),
+                'url'      => $this->getUrl('*/*/massQueue'),
+                'selected' => true,
+            ));
+        }
+
+        return $this;
+    }
 }
