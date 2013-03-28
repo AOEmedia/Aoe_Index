@@ -41,15 +41,14 @@ class Aoe_Index_Model_Observer
                 $process->reindexEverything();
                 Varien_Profiler::stop('__INDEX_PROCESS_REINDEX_ALL__');
 
-                return;
-
+                return '';
             } catch (Mage_Core_Exception $e) {
-                return $e->getMessage();
+                return 'ERROR: '.$e->getMessage();
             } catch (Exception $e) {
-                return $e;
+                return 'ERROR: '.$e;
             }
         } else {
-            return Mage::helper('index')->__('Cannot initialize the indexer process.');
+            return 'ERROR: '.Mage::helper('index')->__('Cannot initialize the indexer process.');
         }
     }
 }
